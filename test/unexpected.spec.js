@@ -2994,4 +2994,51 @@ describe('unexpected', function () {
             });
         });
     });
+
+    describe('showcase', function () {
+        it('collapses subtrees without conflicts', function () {
+            expect({
+                pill: {
+                    red: "I'll show you how deep the rabbit hole goes",
+                    blue: { ignorance: { of:  'illusion' } }
+                }
+            }, 'to equal', {
+                pill: {
+                    red: "I'll show you how deep the rabbit hole goes.",
+                    blue: { ignorance: { of:  'illusion' } }
+                }
+            });
+        });
+
+        it.skipIf(typeof Uint8Array === 'undefined' || !Array.prototype.map, 'produces a hex-diff in JSON when Uint8Arrays differ', function () {
+            expect(
+                new Uint8Array([
+                    0x00, 0x01, 0x02, 0x48, 0x65, 0x72, 0x65, 0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20, 0x74,
+                    0x68, 0x69, 0x6E, 0x67, 0x20, 0x49, 0x20, 0x77, 0x61, 0x73, 0x20, 0x74, 0x61, 0x6C, 0x6B, 0x69,
+                    0x6E, 0x67, 0x20, 0x61, 0x62, 0x6F, 0x75, 0x74
+                ]),
+                'to equal',
+                new Uint8Array([
+                    0x00, 0x01, 0x02, 0x48, 0x65, 0x72, 0x65, 0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x20, 0x74,
+                    0x68, 0x69, 0x6E, 0x67, 0x20, 0x49, 0x20, 0x77, 0x61, 0x73, 0x20, 0x71, 0x75, 0x75, 0x78, 0x79,
+                    0x6E, 0x67, 0x20, 0x61, 0x62, 0x6F, 0x75, 0x74
+                ])
+            );
+        });
+
+        it('blabla', function () {
+            expect(function () {
+                var app;
+                // gzip/deflate outgoing responses
+                var compression = require('compression');
+                app.use(compression());
+
+                // store session state in browser cookie
+                var cookieSession = require('cookie-session');
+                app.use(cookieSession({
+                    keys: ['secret1', 'secret2']
+                }));
+            }, 'not to throw');
+        });
+    });
 });
