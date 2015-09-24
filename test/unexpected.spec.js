@@ -3048,17 +3048,35 @@ describe('unexpected', function () {
         });
 
         describe('with an array satisfied against an array', function () {
-            it('should render missing items nicely', function () {
-                expect(function () {
-                    expect([], 'to satisfy', [1, 2]);
-                }, 'to throw',
-                    "expected [] to satisfy [ 1, 2 ]\n" +
-                    "\n" +
-                    "[\n" +
-                    "  // missing: should equal 1\n" +
-                    "  // missing: should equal 2\n" +
-                    "]"
-                );
+            describe('of simple items', function () {
+                it('should render missing items nicely', function () {
+                    expect(function () {
+                        expect([1, 2, 3], 'to satisfy', [1, 3]);
+                    }, 'to throw',
+                        "expected [ 1, 2, 3 ] to satisfy [ 1, 3 ]\n" +
+                        "\n" +
+                        "[\n" +
+                        "  1,\n" +
+                        "  2, // should be removed\n" +
+                        "  3\n" +
+                        "]"
+                    );
+                });
+            });
+
+            describe('with a complex item that is not supported by the array diff', function () {
+                it('should render missing items nicely', function () {
+                    expect(function () {
+                        expect([], 'to satisfy', [1, toArguments(2)]);
+                    }, 'to throw',
+                        "expected [] to satisfy [ 1, arguments( 2 ) ]\n" +
+                        "\n" +
+                        "[\n" +
+                        "  // missing: should equal 1\n" +
+                        "  // missing: should equal arguments( 2 )\n" +
+                        "]"
+                    );
+                });
             });
         });
 
