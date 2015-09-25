@@ -26,7 +26,7 @@ test-jasmine-browser: unexpected.js
 	@./node_modules/.bin/serve .
 
 test: lint
-	mocha
+	mocha test/*.spec.js `find documentation -name '*.md'`
 
 .PHONY: test
 

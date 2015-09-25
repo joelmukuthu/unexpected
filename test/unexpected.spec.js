@@ -1211,11 +1211,14 @@ describe('unexpected', function () {
         describe('to have message assertion', function () {
             describe('with an Unexpected error', function () {
                 var err;
-                try {
-                    expect(1, 'to equal', 2);
-                } catch (e) {
-                    err = e;
-                }
+                beforeEach(function () {
+                    try {
+                        expect(1, 'to equal', 2);
+                    } catch (e) {
+                        err = e;
+                    }
+                });
+
                 it('should succeed', function () {
                     expect(err, 'to have message', 'expected 1 to equal 2');
                 });
@@ -7642,6 +7645,7 @@ describe('unexpected', function () {
                     '      2 // should equal 3\n' +
                     '    ]');
 
+                workQueue.onUnhandledRejection = null;
                 done();
             };
 
